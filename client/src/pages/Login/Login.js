@@ -1,7 +1,7 @@
 //Login Page
 import React, { Component } from "react";
-//import { SignupBtn, LoginBtn, EnterBtn } from "../../components/Buttons";
-//import { Enter } from "../../components/Enter";
+import { SignupBtn, LoginBtn, EnterBtn } from "../../components/Buttons";
+import { Enter } from "../../components/Enter";
 //import Logo from "../../components/Logo/Logo";
 import Modal from "../../components/Modal/Modal";
 
@@ -33,7 +33,20 @@ class Login extends Component {
     render() {
         return (
             <div>
-                    {/* add buttons */}
+            <SignupBtn/>
+            <LoginBtn />
+               
+{/* Gotta tie the buttons to state and onClick functions*/}
+                <div>
+                <Enter></Enter>
+                <EnterBtn /> 
+                </div>
+                
+                    <div> 
+                        <p id="session-not-exist">Session does not exist, double check game keyword or create new game</p>
+                    </div>
+                
+                
                 <Modal 
                     className="game-instructions" 
                     id="general-game-instructions" 

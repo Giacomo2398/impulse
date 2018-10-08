@@ -3,6 +3,7 @@
 import React, { Component } from "react";
 //import API from "../../utils/API"; API for getting session routes
 //import io from "socket.io-client";  Gonna add it soon
+
 class Home extends Component {
 
     render() {
