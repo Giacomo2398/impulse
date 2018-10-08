@@ -1,8 +1,4 @@
-const mongoose = require("mongoose");
-const db = require("../models");
-mongoose.Promise = global.Promise;
-
-const gifCategories = [
+const Categories = [
 	{
 		icon: "far fa-meh",
 		index: 0,
@@ -67,14 +63,4 @@ const gifCategories = [
 	}
 ];
 
-db.Gif
-	.remove({})
-	.then(() => db.Gif.collection.insertMany(gifCategories))
-	.then(data => {
-		console.log(data.insertedIds.length + "categories inserted");
-		process.exit(0);
-	})
-	.catch(err => {
-		console.log(err);
-		process.exit(1);
-});
+module.expots = Categories;
