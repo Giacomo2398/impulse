@@ -4,8 +4,10 @@ const router = require("express").Router();
 router.get("/", function(req, res){
   // console.log(req.url);
   let searchTerm = req.url;
+  const newSearchTerm = searchTerm.substring(2);
+  console.log(newSearchTerm);
   console.log("================================")
-  axios.get("https://api.giphy.com/v1/gifs/translate?api_key=8w2u2lXukV6bt1qcjMoDKhNKdhDIOYq1&s=" + searchTerm)
+  axios.get("https://api.giphy.com/v1/gifs/translate?api_key=dc6zaTOxFJmzC&s=" + newSearchTerm)
   .then(function(response){
     res.send(response.data.data.images)
   })
@@ -15,4 +17,3 @@ router.get("/", function(req, res){
 });
 
 module.exports = router;
-

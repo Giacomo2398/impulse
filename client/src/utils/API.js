@@ -23,6 +23,7 @@ export default {
         return axios.get("/api/gif")
     },
     getGIF: function(searchTerm) {
+        // Need to send to /api route to hide API Key
         return axios.get("/api/giphy/?" + searchTerm)
     }
 }

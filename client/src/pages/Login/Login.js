@@ -1,64 +1,142 @@
-//Login Page
 import React, { Component } from "react";
+import axios from "axios"
 import { SignupBtn, LoginBtn, EnterBtn } from "../../components/Buttons";
 import { Enter } from "../../components/Enter";
-//import Logo from "../../components/Logo/Logo";
-import Modal from "../../components/Modal/Modal";
+import API from "../../utils/API"
+import mnGen from "mngen"
 
 class Login extends Component {
 
-    //TODO
-    //Set state here   state = {}
+    state = {
+        randomWord: "",
+        randomURL: "",
+        enteredWord: "",
+        showResults: false,
+        showError: false,
+        showButton: true,
+    }
 
-    //component did mount button
+    componentDidMount = () => {
+        this.loadSavedSessions()
+    }
 
-    //validate input for room key login
+    generateRandomWord = () => {
+        this.setState({showResults: false})
+        this.setState({showError: false})
+        this.setState({showButton: false})
 
-    //Key down listener to save key to state and validate
+        var word = (mnGen.word()).toLowerCase()
 
-    //Generate Random Word using mnGen and save to state
+        this.setState({randomWord: word}, function() {
+            this.generateRandomURL();
+        })
+    }
 
-    //Generate Random URL using mnGen
+    generateRandomURL = () => {
+        var apiURL = "https://makemeapassword.org/api/v1/passphrase/json?pc=1&wc=6&sp=y"
+        axios.get(apiURL)
+        .then(response => {
+            let randomPhrase = response.data.pws[0]
+            let randomArray = randomPhrase.split(" ")
+            let url = ""
+            for (var i = 0; i < randomArray.length; i ++) {
+                url += "/" + randomArray[i]
+            }
+            this.setState({randomURL: url}, function() {
+                this.saveSessionData()
+                this.printState()
+            })    
+        })
+        .catch(err => console.log(err))
+    }
 
-    //Save session data function
+    saveSessionData = () => {
+        API.saveSession({
+            title: this.state.randomWord,
+            url: this.state.randomURL
+        })
+        .then(res => {
+            // const socket = openSocket(res.data.url);
+            // socket.on('connection', () => console.log("hello"));
+            this.loadSavedSessions()
+        })
+        .catch(err => console.log(err.response));
+    }
 
-    //Load session data function
+    loadSavedSessions = () => {
+        API.getSessions()
+        .then(res => console.log(res.data))
+        .catch(err => console.log(err.response));
+    }
 
-    //Delete Session Data function
+    deleteSavedSessions = () => {
+        API.deleteSessions()
+        .then(res => {
+            console.log(res.data)
+            this.loadSavedSessions()
+        })
+        .catch(err => console.log(err.response));
+    }
 
-    //Enter game function based on session/word data
+    loginClick = () => {
+        this.setState({showResults: true});
+    }
 
-    //handle input change to update set state
- 
+    printState = () => {
+        console.log(this.state.randomWord)
+        console.log(this.state.randomURL)
+        console.log(this.state)
+    }
+
+    enterGame = () => {
+
+        let newWord = (this.state.enteredWord).toLowerCase()
+        API.checkSessionTitle(newWord)
+        .then(res =>{
+            console.log(res.data)
+            if (res.data.length < 1) {
+                console.log("Not found")
+                this.setState({showError: true})
+            }
+            else {
+                let url = res.data[0].url
+                let newurl = "/game" + url
+                window.location.href = (newurl)
+                return false
+            }
+        })
+        .catch(err => console.log(err.response));
+    }
+
+    handleInputChange = event => {
+        const { name, value } = event.target;
+        this.setState({
+            [name]: value
+        });
+    };
+
     render() {
         return (
             <div>
-            <SignupBtn/>
-            <LoginBtn />
-               
-{/* Gotta tie the buttons to state and onClick functions*/}
+                <SignupBtn onClick={this.generateRandomWord} randomword={this.state.randomWord} 
+                showbutton={this.state.showButton.toString()}/>
+
+                { this.state.showResults === false ? 
+                    <LoginBtn onClick={this.loginClick} />
+                : null}
+
+                { this.state.showResults ? 
                 <div>
-                <Enter></Enter>
-                <EnterBtn /> 
+                    <Enter name="enteredWord" value={this.state.enteredWord} onChange={this.handleInputChange}/> 
+                    <EnterBtn onClick={this.enterGame}/> 
                 </div>
-                
+                : null }
+
+                { this.state.showError ? 
                     <div> 
                         <p id="session-not-exist">Session does not exist, double check game keyword or create new game</p>
                     </div>
-                
-                
-                <Modal 
-                    className="game-instructions" 
-                    id="general-game-instructions" 
-                    text="How to Play"
-                    modalTitle="How to Play"
-                    modalInstructions1= 
-                        "If you are starting a new game with friends, click 'Create Game' to generate a unique room key." 
-                    modalInstructions2="Click 'Join Game' and enter your room key to start playing. "
-                    modalInstructions3="Share your room key with your friends to all play together!"
-                ></Modal>
-
-                {/* <button onClick={this.deleteSavedSessions}>Delete Sessions</button> */}
+                : null }
                 
             </div>
         );
