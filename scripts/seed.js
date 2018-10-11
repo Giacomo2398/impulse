@@ -63,4 +63,4 @@ const Categories = [
 	}
 ];
 
-module.expots = Categories;
+module.exports = Categories;
