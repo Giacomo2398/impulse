@@ -1,11 +1,27 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:700");
 @import url("https://use.fontawesome.com/releases/v5.0.10/css/all.css");
-h1, h2, h3, h4, h5, h6, p {
+
+body {
+  margin: auto;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  color: white;
+  background: linear-gradient(to right, #ff00cc, #333399);}
+
+/*p {
+  margin: 0px; }
+
+.home-container {
+  padding-bottom: 50px; }
+  
+ */
+
+/* h1, h2, h3, h4, h5, h6, p {
   font-family: "Montserrat", sans-serif;
   color: white;
   font-weight: 700; }
 
-/* .signup-btn, .login-btn, .enter-btn {
+.signup-btn, .login-btn, .enter-btn {
   font-family: "Montserrat", sans-serif;
   color: white;
   border-radius: 30px;
@@ -18,7 +34,7 @@ h1, h2, h3, h4, h5, h6, p {
   border-radius: 50px;
   height: 70px;
   width: 70px;
-  margin: 8px; } */
+  margin: 8px; }
 
 input[type="text"] {
   font-family: "Montserrat", sans-serif;
@@ -29,14 +45,7 @@ input[type="text"] {
   color: grey;
   padding: 8px;
   font-size: 25px; }
-
-body {
-  margin: auto;
-  text-align: center;
-  font-family: "Montserrat", sans-serif;
-  color: white;
-  background: linear-gradient(to right, #ff00cc, #333399);}
-
+ 
 .logo {
   max-width: 700px;
   width: 100%;
@@ -52,7 +61,7 @@ body {
 #username-error {
   padding: 30px 40px 0px 40px; }
 
-/* .signup-btn {
+.signup-btn {
   background: #f12711;
   width: 70%;
   max-width: 250px; }
@@ -63,7 +72,7 @@ body {
   max-width: 250px; }
 
 .signup-btn:hover, .login-btn:hover, .enter-btn:hover {
-  background-color: grey; } */
+  background-color: grey; }
 
 input[type="text"] {
   margin: auto;
@@ -75,11 +84,11 @@ input[type="text"] {
 input[type="text"]:focus {
   outline: none; }
 
-/* #key-icon {
+#key-icon {
   transform: rotate(45deg);
-  font-size: 40px; } */
+  font-size: 40px; }
 
-/* #roomkey {
+#roomkey {
   margin: auto;
   text-align: center;
   border-radius: 30px;
@@ -87,30 +96,23 @@ input[type="text"]:focus {
   width: 80%;
   max-width: 300px;
   font-size: 14px;
-  padding: 10px 25px; } */
+  padding: 10px 25px; }
 
-/* #random-word {
+#random-word {
   margin-top: -10px;
-  font-size: 40px; } */
-
-p {
-  margin: 0px; }
-
-.home-container {
-  padding-bottom: 50px; }
+  font-size: 40px; }
 
 .prompt-title {
   font-size: 27px;
   padding-top: 15px; }
 
-/* .gif-component {
+.gif-component {
   background-size: cover;
   text-align: center; }
   .gif-component .gif-preview {
     object-fit: fill;
     max-height: 240px;
-    max-width: 100%; } */
-
+    max-width: 100%; }
 
 .promptSelect-component {
   padding: 10px; }
@@ -200,7 +202,7 @@ p {
 .charcoal-prof {
   background-color: #444444; }
 
-/* .bottom-nav {
+.bottom-nav {
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -228,7 +230,7 @@ p {
       top: 7px;
       color: grey;
       font-size: 25px;
-      z-index: 1000; } */
+      z-index: 1000; }
 
 .expanded {
   min-height: 50vh; }
@@ -236,13 +238,13 @@ p {
 .not-expanded {
   min-height: 0; }
 
-/* .loading-screen-holder {
+.loading-screen-holder {
   min-height: 25px;
   width: 100%;
   padding: 15px;
-  margin-top: 30px; } */
+  margin-top: 30px; }
 
-/* #loading-pg-roomkey, .judge {
+#loading-pg-roomkey, .judge {
   padding: 10px 25px;
   border-radius: 20px;
   position: absolute;
@@ -250,7 +252,7 @@ p {
 
 #loading-pg-roomkey {
   right: 15px;
-  background-color: #f12711; } */
+  background-color: #f12711; }
 
 .judge {
   left: 15px;
@@ -314,4 +316,4 @@ p {
   text-align: left;
   margin-top: 5px; }
   .playerlist-holder td {
-    padding: 5px 15px; }
+    padding: 5px 15px; } */

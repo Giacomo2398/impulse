@@ -32,6 +32,12 @@ input[type="text"]:focus {
 .setup-color-buttondiv {
     padding: 15px 20px; }
 
+.color-btn {
+    border-radius: 50%;
+    height: 70px;
+    width: 70px;
+    margin: 7px; }
+
 .color-btn:hover {
     box-shadow: 0 0 2px 5px grey; }
     
