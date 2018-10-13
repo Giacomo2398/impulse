@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./style/winnerPage.css";
 
 class WinnerPage extends Component {
   state = {
