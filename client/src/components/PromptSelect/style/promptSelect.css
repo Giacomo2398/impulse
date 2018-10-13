@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:700");
+@import url("https://use.fontawesome.com/releases/v5.0.10/css/all.css");
+
+h1, h2, h3, h4, h5, h6, p {
+    font-family: "Montserrat", sans-serif;
+    color: white;
+    font-weight: 700; }
+
+.promptSelect-component {
+    padding: 10px; }
+    .promptSelect-component h5 {
+        font-family: "Montserrat", sans-serif;
+        color: white; }
+    .promptSelect-component .prompt-card {
+        text-align: left;
+        width: 95%;
+        max-width: 400px;
+        display: block;
+        margin: 0 auto;
+        padding: 15px 10px;
+        border-radius: 15px; }
+        .promptSelect-component .prompt-card i {
+        padding-right: 15px; }
+    .promptSelect-component .prompt-card:hover {
+        cursor: pointer; }

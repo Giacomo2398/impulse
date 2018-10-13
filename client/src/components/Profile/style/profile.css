@@ -1,0 +1,105 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:700");
+@import url("https://use.fontawesome.com/releases/v5.0.10/css/all.css");
+
+.setup-profile {
+    font-size: 30px;
+    padding-top: 15px; }
+
+input[type="text"] {
+    font-family: "Montserrat", sans-serif;
+    color: white;
+    border-radius: 30px;
+    border: none;
+    background-color: lightgrey;
+    color: grey;
+    padding: 8px;
+    font-size: 25px; }
+
+input[type="text"] {
+    margin: auto;
+    text-align: center;
+    margin-top: 20px;
+    width: 70%;
+    max-width: 250px; }
+    
+input[type="text"]:focus {
+    outline: none; }
+
+.pick-a-color {
+    font-size: 20px;
+    padding: 20px 15px 0px 15px; }
+
+.setup-color-buttondiv {
+    padding: 15px 20px; }
+
+.color-btn {
+    border-radius: 50%;
+    height: 70px;
+    width: 70px;
+    margin: 7px; }
+
+.color-btn:hover {
+    box-shadow: 0 0 2px 5px grey; }
+    
+#selected {
+    box-shadow: 0 0 1px 6px grey; }
+
+.yellow-prof {
+    background-color: #FFC655; }
+
+.blue-prof {
+    background-color: #5FACFF; }
+
+.red-prof {
+    background-color: #f12711; }
+
+.pink-prof {
+    background-color: #1D2671; }
+
+.green-prof {
+    background-color: #44BBA4; }
+
+.orange-prof {
+    background-color: #FF8A5B; }
+
+.purple-prof {
+    background-color: #9964FF; }
+
+.charcoal-prof {
+    background-color: #444444; }
+
+.complete-profile-btn {
+    padding: 15px 15px 0px 15px; }
+    
+.join {
+    background-color: #44BBA4;
+    color: #fff; }
+
+.join:hover {
+    cursor: pointer; }
+
+.cantJoin {
+    background-color: #C0C0C0;
+    color: grey !important; }
+
+.join-btn {
+    font-family: "Montserrat", sans-serif;
+    color: white;
+    border-radius: 30px;
+    font-size: 25px;
+    padding: 10px 25px;
+    width: 180px;
+    transition: .25s; }
+
+p {
+    margin: 0px; }
+
+#not-a-session {
+    margin-top: 25%;
+    font-size: 150%; }
+    
+#session-not-exist {
+    padding: 30px; }
+    
+#username-error {
+    padding: 30px 40px 0px 40px; }

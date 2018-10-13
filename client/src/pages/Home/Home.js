@@ -10,6 +10,7 @@ import Profile from "../../components/Profile/Profile";
 import PromptSelect from "../../components/PromptSelect/PromptSelect";
 import Timer from "../../components/Timer/Timer";
 import WinnerPage from "../../components/WinnerPage/WinnerPage";
+import "./style/home.css";
 
 class Home extends Component {
 

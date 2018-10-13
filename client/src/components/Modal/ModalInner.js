@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ModalButton from "../Buttons/modalButton";
+import "./style/modal.css";
 
 class ModalInner extends Component {
 

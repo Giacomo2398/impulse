@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./style/promptSelect.css";
 
 class PromptSelect extends Component {
 

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./style/buttons.css";
 
 class BackBtn extends Component {
 

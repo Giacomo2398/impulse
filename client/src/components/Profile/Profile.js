@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
+import "./style/profile.css";
 
 
 class Profile extends Component {
