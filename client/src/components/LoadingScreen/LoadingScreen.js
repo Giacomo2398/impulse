@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./style/loadingScreen.css";
 
 class LoadingScreen extends Component {
 

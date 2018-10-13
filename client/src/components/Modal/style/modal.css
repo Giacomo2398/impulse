@@ -1,0 +1,5 @@
+.expanded {
+    min-height: 50vh; }
+  
+.not-expanded {
+    min-height: 0; }

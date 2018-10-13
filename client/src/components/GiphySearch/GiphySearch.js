@@ -1,6 +1,8 @@
 import React from "react";
+import "./style/gifSearch.css";
 
 class gifSearch extends Component {
+
     render(){
         return(
             <div className="form-group">
