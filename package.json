@@ -1,6 +1,9 @@
 {
     "name": "impulse",
     "version": "1.0.0",
+    "engines":{
+      "yarn":"1.4.0"
+    },
     "description": "",
     "main": "server.js",
     "scripts": {

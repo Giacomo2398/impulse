@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import axios from "axios"
 import { SignupBtn, LoginBtn, EnterBtn } from "../../components/Buttons";
 import { Enter } from "../../components/Enter";
-import API from "../../utils/API"
-import mnGen from "mngen"
+import Logo from "../../components/Logo/Logo";
+import API from "../../utils/API";
+import mnGen from "mngen";
+import Modal from "../../components/Modal/Modal";
 
 class Login extends Component {
 
@@ -14,11 +15,29 @@ class Login extends Component {
         showResults: false,
         showError: false,
         showButton: true,
+        enterKey: 13,
     }
 
     componentDidMount = () => {
         this.loadSavedSessions()
+        document.addEventListener("keydown", this.handleKeyDown.bind(this));
     }
+
+    validateInput = () => {
+        if (!this.state.enteredWord) return;
+        this.enterGame();
+    }
+
+    handleKeyDown = event => {
+        switch( event.keyCode ) {
+            case this.state.enterKey:
+                this.validateInput();
+                break;
+            default: 
+                console.log( event.keyCode )
+                break;
+        }
+    };
 
     generateRandomWord = () => {
         this.setState({showResults: false})
@@ -28,26 +47,23 @@ class Login extends Component {
         var word = (mnGen.word()).toLowerCase()
 
         this.setState({randomWord: word}, function() {
+            sessionStorage.setItem("roomkey", word)
             this.generateRandomURL();
         })
     }
 
     generateRandomURL = () => {
-        var apiURL = "https://makemeapassword.org/api/v1/passphrase/json?pc=1&wc=6&sp=y"
-        axios.get(apiURL)
-        .then(response => {
-            let randomPhrase = response.data.pws[0]
-            let randomArray = randomPhrase.split(" ")
-            let url = ""
-            for (var i = 0; i < randomArray.length; i ++) {
-                url += "/" + randomArray[i]
-            }
-            this.setState({randomURL: url}, function() {
-                this.saveSessionData()
-                this.printState()
-            })    
+        let randomUrl = ""
+
+        for (var i = 0; i < 6; i ++ ) {
+           let word =  (mnGen.word()).toLowerCase()
+           randomUrl += "/" + word
+        }
+
+        this.setState({randomURL: randomUrl}, function() {
+            this.saveSessionData()
+            this.printState()
         })
-        .catch(err => console.log(err))
     }
 
     saveSessionData = () => {
@@ -89,24 +105,14 @@ class Login extends Component {
     }
 
     enterGame = () => {
-
-        let newWord = (this.state.enteredWord).toLowerCase()
+        let newWord = this.state.enteredWord.toLowerCase();
         API.checkSessionTitle(newWord)
-        .then(res =>{
-            console.log(res.data)
-            if (res.data.length < 1) {
-                console.log("Not found")
-                this.setState({showError: true})
-            }
-            else {
-                let url = res.data[0].url
-                let newurl = "/game" + url
-                window.location.href = (newurl)
-                return false
-            }
-        })
-        .catch(err => console.log(err.response));
-    }
+          .then(res => {
+            if (!res.data.length) return this.setState({ showError: true });
+            this.props.history.push(`/game${res.data[0].url}`);
+          })
+          .catch(err => console.log(err.response));
+      };
 
     handleInputChange = event => {
         const { name, value } = event.target;
@@ -118,6 +124,7 @@ class Login extends Component {
     render() {
         return (
             <div>
+                <Logo></Logo>
                 <SignupBtn onClick={this.generateRandomWord} randomword={this.state.randomWord} 
                 showbutton={this.state.showButton.toString()}/>
 
@@ -137,6 +144,19 @@ class Login extends Component {
                         <p id="session-not-exist">Session does not exist, double check game keyword or create new game</p>
                     </div>
                 : null }
+
+                <Modal 
+                    className="game-instructions" 
+                    id="general-game-instructions" 
+                    text="How to Play"
+                    modalTitle="How to Play"
+                    modalInstructions1= 
+                        "If you are starting a new game with friends, click 'Create Game' to generate your unique room key." 
+                    modalInstructions2="Click 'Join Game' and enter your room key to start playing. "
+                    modalInstructions3="Share your room key with your friends so you can all play together!"
+                ></Modal>
+
+                {/* <button onClick={this.deleteSavedSessions}>Delete Sessions</button> */}
                 
             </div>
         );
