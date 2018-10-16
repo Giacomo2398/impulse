@@ -30,3 +30,8 @@
         color: grey;
         font-size: 25px;
         z-index: 1000; }
+        .expanded {
+          min-height: 50vh; }
+        
+        .not-expanded {
+          min-height: 0; }

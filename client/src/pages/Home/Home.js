@@ -1,18 +1,16 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
-import BottomNav from "../../components/BottomNav/bottomNav";
+import BottomNav from "../../components/BottomNav/BottomNav";
 import CurrentPlayer from "../../components/CurrentPlayer/CurrentPlayer";
 import GifReveal from "../../components/GifReveal/GifReveal";
 import GiphySearch from "../../components/GiphySearch/GiphySearch";
 import io from "socket.io-client";
-import GiphySearch from "../../components/GiphySearch/GiphySearch";
 import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
 import PlayerList from "../../components/PlayerList/PlayerList";
 import PlayerListHolder from "../../components/PlayerListHolder/PlayerListHolder";
 import Profile from "../../components/Profile/Profile";
 import PromptSelect from "../../components/PromptSelect/PromptSelect";
 import Timer from "../../components/Timer/Timer";
-import GiphySearch from "../../components/GiphySearch/GiphySearch"
 import WinnerPage from "../../components/WinnerPage/WinnerPage";
 import "./style/home.css";
 
@@ -544,33 +542,6 @@ class Home extends Component {
                     </div>
                 
                 : null }
-
-                { this.state.showGiphySearch ?
-                    <div> 
-                        <GiphySearch theme={this.state.selectedTheme} category={this.state.selectedCategory} socket={this.state.socket} 
-                        userSocket={this.state.socketAddress} 
-                        timer={this.state.outOfTime} outOfTime={this.componentChange.bind(this)} >
-                            <Timer outOfTime={this.componentChange.bind(this)} />
-                        </GiphySearch>
-
-                        <BottomNav expand={() => { this.expandToggle() }} class={this.state.BottomNavClasses}>
-                            <PlayerListHolder>
-                                <CurrentPlayer playerName={this.state.userName} playerScore={this.state.userScore}
-                                userColor={this.state.userColor} />
-                                {this.state.BottomNavPlayerList.map(
-                                    player => (
-                                        <PlayerList
-                                        key={player.ip}
-                                        id={player.ip}
-                                        playerName={player.name} playerScore={player.score}
-                                        userColor={player.color}
-                                        />
-                                    ))
-                                }
-                            </PlayerListHolder>
-                        </BottomNav> 
-                    </div>
-                : null}
 
                 { this.state.showGifReveal ? 
                     <GifReveal

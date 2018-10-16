@@ -6,8 +6,6 @@ import API from "../../utils/API";
 import Modal from "../../components/Modal/Modal";
 import mnGen from "mngen";
 import "./style/login.css";
-import Modal from "../../components/Modal/Modal";
-import Logo from "../../components/Logo/Logo"
 
 class Login extends Component {
 
@@ -153,12 +151,7 @@ class Login extends Component {
                     id="general-game-instructions" 
                     text="How to Play"
                     modalTitle="How to Play"
-                    modalInstructions1= 
-<<<<<<< Updated upstream
-                        "If you are starting a new game with friends, click 'Create Game' to generate your unique room key." 
-=======
-                        "If you are starting a new game with friends, click 'Create Game' to generate a unique room key." 
->>>>>>> Stashed changes
+                    modalInstructions1= "If you are starting a new game with friends, click 'Create Game' to generate your unique room key." 
                     modalInstructions2="Click 'Join Game' and enter your room key to start playing. "
                     modalInstructions3="Share your room key with your friends so you can all play together!"
                 ></Modal>

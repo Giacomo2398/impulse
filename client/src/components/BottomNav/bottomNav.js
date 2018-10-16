@@ -1,5 +1,5 @@
 import React from "react";
-import "./style/bottomNav.css";
+import "./style/BottomNav.css";
 
 const BottomNav = props => (
 	<nav className={props.class}>
