@@ -2,8 +2,9 @@
 @import url("https://use.fontawesome.com/releases/v5.0.10/css/all.css");
 
 .playerlist-holder {
-    width: 100%;
-    text-align: left;
-    margin-top: 5px; }
-    .playerlist-holder td {
-      padding: 5px 15px; }
+  width: 92%;
+  text-align: left; }
+  .playerlist-holder .player {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px; }

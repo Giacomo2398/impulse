@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import API from "../../utils/API";
 import BottomNav from "../../components/BottomNav/BottomNav";
 import CurrentPlayer from "../../components/CurrentPlayer/CurrentPlayer";
+import GifReveal from "../../components/GifReveal/GifReveal";
+import GiphySearch from "../../components/GiphySearch/GiphySearch";
 import io from "socket.io-client";
 import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
 import PlayerList from "../../components/PlayerList/PlayerList";
@@ -134,6 +136,7 @@ class Home extends Component {
             })
         })
 
+            //When the judge selects a category, change state for players
         self.state.socket.on("categorytheme selected judge", function(data) {
             console.log("YOU SELECTED GAME")
             self.setState({selectedTheme: data.model.theme})
@@ -150,7 +153,7 @@ class Home extends Component {
                 }) 
             }) 
         })
-
+        //If the player runs out of time, show previous gif.
         self.state.socket.on('playeroutoftimereturned', function(data) {
 
             let gifArray = []
@@ -179,7 +182,7 @@ class Home extends Component {
 
 
         })
-
+        //set the gif for when a player has chosen one
         self.state.socket.on('playerchosenreturned', function(data) {
             let gifArray = []
             for (var i = 0; i < self.state.gifsReturned.length; i ++ ) {
@@ -207,7 +210,7 @@ class Home extends Component {
                 }
             })
         })
-
+        
         self.state.socket.on('winnerinfojudge', function(data) {
             self.setState({winner: data})
 
@@ -317,6 +320,7 @@ class Home extends Component {
 
                     this.state.socket.on('usermade', function(data) {
                         console.log("usermade socket working")
+                        console.log(data);
                         self.setState({socketAddress: data.userid}, function() {
 
                             //No members in session
@@ -479,6 +483,33 @@ class Home extends Component {
                     </div>
                 : null}
 
+                { this.state.showGiphySearch ?
+                    <div> 
+                        <GiphySearch theme={this.state.selectedTheme} category={this.state.selectedCategory} socket={this.state.socket} 
+                        userSocket={this.state.socketAddress} 
+                        timer={this.state.outOfTime} outOfTime={this.componentChange.bind(this)} >
+                            <Timer outOfTime={this.componentChange.bind(this)} />
+                        </GiphySearch>
+
+                        <BottomNav expand={() => { this.expandToggle() }} class={this.state.BottomNavClasses}>
+                            <PlayerListHolder>
+                                <CurrentPlayer playerName={this.state.userName} playerScore={this.state.userScore}
+                                userColor={this.state.userColor} />
+                                {this.state.BottomNavPlayerList.map(
+                                    player => (
+                                        <PlayerList
+                                        key={player.ip}
+                                        id={player.ip}
+                                        playerName={player.name} playerScore={player.score}
+                                        userColor={player.color}
+                                        />
+                                    ))
+                                }
+                            </PlayerListHolder>
+                        </BottomNav> 
+                    </div>
+                : null}
+
                 {this.state.showJudgeCategory ?
                     <div>
                         <p className="prompt-title">Select a Theme</p>
@@ -511,6 +542,14 @@ class Home extends Component {
                     </div>
                 
                 : null }
+
+                { this.state.showGifReveal ? 
+                    <GifReveal
+                        theme={this.state.selectedTheme} category={this.state.selectedCategory} gifsReturned={this.state.gifsReturned} 
+                        users={this.state.allPlayers} userSocket = {this.state.socketAddress}
+                        socket={this.state.socket}
+                    />
+                : null}
 
                 { this.state.showWinner ? 
                     <div>

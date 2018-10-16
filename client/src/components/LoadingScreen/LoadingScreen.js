@@ -140,7 +140,7 @@ class LoadingScreen extends Component {
         <p className="judge"><i className="fas fa-gavel"></i> {this.props.judge}</p>
       
         <div>
-          <img src="https://media.giphy.com/media/3op2XKLw67aLrvKikC/giphy.gif" alt="" className="loading-gif"/>
+          <img src="https://media.giphy.com/media/ErLimaUL0blbW/giphy.gif" alt="" className="loading-gif"/>
           <p className="waiting-msg">{this.state.pendingMessage}</p>
           <div>
             <h1 id="current-players"> {this.state.pendingPlayerHeader} </h1>
