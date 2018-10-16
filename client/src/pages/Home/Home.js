@@ -5,6 +5,7 @@ import CurrentPlayer from "../../components/CurrentPlayer/CurrentPlayer";
 import GifReveal from "../../components/GifReveal/GifReveal";
 import GiphySearch from "../../components/GiphySearch/GiphySearch";
 import io from "socket.io-client";
+import GiphySearch from "../../components/GiphySearch/GiphySearch";
 import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
 import PlayerList from "../../components/PlayerList/PlayerList";
 import PlayerListHolder from "../../components/PlayerListHolder/PlayerListHolder";

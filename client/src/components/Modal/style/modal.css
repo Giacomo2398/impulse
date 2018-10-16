@@ -6,3 +6,41 @@
   
 .not-expanded {
     min-height: 0; }
+
+.modal-background {
+    background: linear-gradient(to right, #360033, #0b8793); }
+
+.modal-style {
+  background-color: #2e2a33;
+  border-radius: 15px;
+  padding: 20px 10px;
+  border: 3px solid #2e2a33; }
+
+.modal-title {
+  font-family: "Montserrat", sans-serif;
+  color: white;
+  font-weight: 700;
+  color: white;
+  font-size: 35px; }
+
+.modal-text {
+  padding: 20px; }
+
+.modal-p {
+  padding: 5px;
+  font-size: 13px; }
+
+.modal-btn i {
+  background-color: #44BBA4;
+  border-radius: 50%;
+  font-size: 20px;
+  padding: 10px; }
+
+.modal-btn:hover i {
+  cursor: pointer;
+  background-color: #3da893;
+  transition: .25s; }
+
+@media only screen and (max-width: 650px) {
+  .modal-style {
+    width: 90% !important; } }
