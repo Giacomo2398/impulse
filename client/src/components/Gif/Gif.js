@@ -1,4 +1,5 @@
 import React from "react";
+import "./style/gif.css";
 
 const Gif = props => (
   <div className="gif-component" onClick={props.onClick} key={props.user}>

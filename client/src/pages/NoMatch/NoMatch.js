@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import BackBtn from "../../components/Buttons/backButton";
+import "./style/noMatch.css";
 
 class NoMatch extends Component {
 

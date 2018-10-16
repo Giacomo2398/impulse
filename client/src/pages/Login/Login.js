@@ -3,8 +3,9 @@ import { SignupBtn, LoginBtn, EnterBtn } from "../../components/Buttons";
 import { Enter } from "../../components/Enter";
 import Logo from "../../components/Logo/Logo";
 import API from "../../utils/API";
-import mnGen from "mngen";
 import Modal from "../../components/Modal/Modal";
+import mnGen from "mngen";
+import "./style/login.css";
 
 class Login extends Component {
 

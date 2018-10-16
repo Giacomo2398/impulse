@@ -1,0 +1,31 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:700");
+@import url("https://use.fontawesome.com/releases/v5.0.10/css/all.css");
+
+h1, h2, h3, h4, h5, h6, p {
+    font-family: "Montserrat", sans-serif;
+    color: white;
+    font-weight: 700; }
+
+.next-round-btn {
+    font-family: "Montserrat", sans-serif;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 40px;
+    position: absolute;
+    top: 65px;
+    right: 15px;
+    background: #1D2671;
+    font-size: 16px; }
+    
+.next-round-btn {
+    top: 10px; }
+
+p {
+    margin: 0px; }
+
+.judge {
+    padding: 10px 25px;
+    border-radius: 20px;
+    position: absolute;
+    top: 10px; }
+

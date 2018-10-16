@@ -1,6 +1,22 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:700");
 @import url("https://use.fontawesome.com/releases/v5.0.10/css/all.css");
-h1, h2, h3, h4, h5, h6, p {
+
+body {
+  margin: auto;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  color: white;
+  background: linear-gradient(to right, #ff00cc, #333399);}
+
+/*p {
+  margin: 0px; }
+
+.home-container {
+  padding-bottom: 50px; }
+  
+ */
+
+/* h1, h2, h3, h4, h5, h6, p {
   font-family: "Montserrat", sans-serif;
   color: white;
   font-weight: 700; }
@@ -29,14 +45,7 @@ input[type="text"] {
   color: grey;
   padding: 8px;
   font-size: 25px; }
-
-body {
-  margin: auto;
-  text-align: center;
-  font-family: "Montserrat", sans-serif;
-  color: white;
-  background: linear-gradient(to right, #ff00cc, #333399);}
-
+ 
 .logo {
   max-width: 700px;
   width: 100%;
@@ -93,12 +102,6 @@ input[type="text"]:focus {
   margin-top: -10px;
   font-size: 40px; }
 
-p {
-  margin: 0px; }
-
-.home-container {
-  padding-bottom: 50px; }
-
 .prompt-title {
   font-size: 27px;
   padding-top: 15px; }
@@ -110,7 +113,6 @@ p {
     object-fit: fill;
     max-height: 240px;
     max-width: 100%; }
-
 
 .promptSelect-component {
   padding: 10px; }
@@ -399,4 +401,3 @@ p {
           .giphy-component .search-holder .button-holder .confirm:hover {
             cursor: pointer;
             background: #3da893; }
-    
