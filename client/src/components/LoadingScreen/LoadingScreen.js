@@ -121,23 +121,6 @@ class LoadingScreen extends Component {
     return (
 
       <div className="loading-screen-holder">
-        { this.state.showKeyword ? 
-
-          <div>
-            <div id="loading-pg-roomkey"> 
-              <p><i className="fas fa-key"></i> {this.props.keyword}</p>
-            </div>
-
-            <div className="pull-themes-btn">
-              <span className="btn">
-              { this.state.userJudge ? 
-                <p className="judge-start" onClick={this.startGame}>Start</p>
-              : null}
-              </span>
-            </div>
-          </div>
-
-        : null }
 
         { this.state.showTheme ? 
           <div id = "theme-prompt"> 
@@ -176,6 +159,23 @@ class LoadingScreen extends Component {
                   ) : null} 
               </div>
           </div>
+          { this.state.showKeyword ? 
+
+            <div>
+              <div id="loading-pg-roomkey"> 
+                <p><i className="fas fa-key"></i> {this.props.keyword}</p>
+              </div>
+
+              <div className="pull-themes-btn">
+                <span className="btn">
+                { this.state.userJudge ? 
+                  <p className="judge-start" onClick={this.startGame}>Start</p>
+                : null}
+                </span>
+              </div>
+            </div>
+
+        : null }
         </div>
       </div>
     )
