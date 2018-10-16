@@ -1,1 +1,1 @@
-export { default } from "./GiphySearch.js";
+export * from "./GiphySearch";
