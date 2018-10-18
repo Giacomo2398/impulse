@@ -59,7 +59,7 @@ const Categories = [
 		index: 8,
 		color: "#FF8A5B",
 		theme: ["Supernatural Encounters"],
-		categories: ["When you stand up too quickly and get a headrush", "When you wake up on an alien spaceship", "Your friend is driven mad in his attempts to contact Cthulu"]
+		categories: ["When you stand up too quickly and get a headrush", "When you wake up on an alien spaceship", "Your friend is driven mad in his attempts to contact Cthulu", "When your feet reach over the edge of the bed"]
 	}
 ];
 
