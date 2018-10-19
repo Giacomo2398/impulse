@@ -12,6 +12,7 @@ import Profile from "../../components/Profile/Profile";
 import PromptSelect from "../../components/PromptSelect/PromptSelect";
 import Timer from "../../components/Timer/Timer";
 import WinnerPage from "../../components/WinnerPage/WinnerPage";
+import reloadSocket from "./reloadSocket.js";
 import "./style/home.css";
 
 class Home extends Component {
@@ -50,10 +51,11 @@ class Home extends Component {
         socket: "",
         pendingMessage: "",
         pendingPlayerHeader: "",
-        profBtnClicked: false,
-        profBtnId: "selected-btn",
-
         gifsReturned: [],
+
+        // If user exits, remaining users are reloaded
+        remainingUsers: [],
+        socketCalls: 0,
 
         // Variables to prompt showing React components
         showProfile: false,
@@ -64,28 +66,84 @@ class Home extends Component {
         showJudgeChoices: false,
         showWinner: false,
         showTimer: false,
-        outOfTime: false
+        outOfTime: false,
+
     }
 
     // check IP address on mount
     componentDidMount = () => {
-
         this.returnCategories()
         this.setUrl()
-
     }
 
     configureSocket = (socket) => {
         const self = this;
 
-        self.state.socket.on("useraddedsuccessfullyother", function(data) {
-            console.log("NEW USER ADDED")
-            self.updateMembers(data, function(){console.log('member added')})
+        self.state.socket.on('usermade', function(data) {
+
+            console.log("usermade socket working")
+            console.log(data.userid)
+
+            API.checkSessionUrl(self.state.urlString)
+            .then(res => {
+                console.log(res.data[0])
+                console.log(sessionStorage.getItem("username"))
+
+                let count = 0;
+
+                for (var i=0; i < res.data[0].members.length; i ++) {
+                    if (res.data[0].members[i].ip === sessionStorage.getItem("username")) {
+
+                        console.log("IF IS ACTIVE")
+                        console.log("API Check SessionURL response:")
+                        console.log(res)
+                        
+                        reloadSocket(res, self.componentChange.bind(this), self.state.socket)
+                        self.setState({socketAddress: sessionStorage.getItem("username")})
+
+                        break
+                    }
+
+                    else {
+                        count ++
+                    }
+                }
+
+                if (count === res.data[0].members.length) {
+                    console.log("ELSE IS ACTIVE")
+                    self.setState({showProfile: true})
+                }
+            }) 
 
         })
 
+        self.state.socket.on('useraddedsuccessfullyself', function(data) {
+            console.log("YOU ARE ADDED")
+            sessionStorage.setItem("socketMessage", "useraddedsuccessfullyself")
+            self.setState({pendingPlayerHeader: "Players logged in"})
+            self.updateMembers(data, function() {
+                console.log('useradded')
+                if (self.state.userJudge) {
+                    self.setState({pendingMessage: "Click start game when ready to play"})
+                    self.setState({showProfile: false})
+                    self.setState({showPending: true})
+                }
+                else {
+                    self.setState({pendingMessage: "Waiting for game to start..."})
+                    self.setState({showProfile: false})
+                    self.setState({showPending: true})
+                } 
+            })
+             
+        })
+
+        self.state.socket.on("useraddedsuccessfullyother", function(data) {
+            sessionStorage.setItem("socketMessage", "useraddedsuccessfullyother")
+            self.updateMembers(data, function(){console.log('Member added')})
+        })
+
         self.state.socket.on("startgameplayer", function(data){
-            console.log("PLAYER GAME STARTED")
+            sessionStorage.setItem("socketMessage", "startgameplayer")
             self.setState({pendingPlayerHeader: "Players in round"}, function() {
                 self.updateMembers(data, function() {
                     let judge = self.state.currentJudge
@@ -95,14 +153,14 @@ class Home extends Component {
             })       
         })
 
-        self.state.socket.on("startgamejudge", function(data) {
-            console.log("JUDGE GAME STARTED")
+        self.state.socket.on("startgamejudge", function() {
+            sessionStorage.setItem("socketMessage", "startgamejudge")
             self.setState({showPending: false})
             self.setState({showJudgeCategory: true})
         })
 
         self.state.socket.on("startnextroundplayer", function() {
-            console.log("PLAYER GAME STARTED")
+            sessionStorage.setItem("socketMessage", "startnextroundplayer")
             self.setState({gifsReturned: []})
             self.setState({outOfTime: false})
             self.setState({pendingPlayerHeader: "Players in round"}, function() {
@@ -116,7 +174,7 @@ class Home extends Component {
         })
 
         self.state.socket.on("startnextroundjudge", function() {
-            console.log("JUDGE GAME STARTED")
+            sessionStorage.setItem("socketMessage", "startnextroundjudge")
             self.setState({gifsReturned: []})
             self.setState({outOfTime: false})
             self.setState({showWinner: false})
@@ -124,11 +182,15 @@ class Home extends Component {
         })
 
         self.state.socket.on("categorytheme selected player", function(data) {
-            console.log("JUDGE SELECTED GAME")
+            sessionStorage.setItem("socketMessage", "categorytheme selected player")
+            sessionStorage.setItem("selectedTheme", data.model.theme)
+            sessionStorage.setItem("selectedCategory", data.model.category)
+            sessionStorage.setItem("timer", 45)
             self.setState({selectedTheme: data.model.theme})
             let newArray = []
             newArray.push(data.model.member)
             self.setState({playerList: newArray})
+            sessionStorage.setItem("playerArray", JSON.stringify(newArray))
             self.setState({selectedCategory: data.model.category}, function() {
                 self.setState({showPending: false})
                 self.setState({showTimer: true})
@@ -136,9 +198,15 @@ class Home extends Component {
             })
         })
 
-            //When the judge selects a category, change state for players
         self.state.socket.on("categorytheme selected judge", function(data) {
+            sessionStorage.setItem("socketMessage", "categorytheme selected judge")
+            sessionStorage.setItem("selectedTheme", data.model.theme)
+            sessionStorage.setItem("selectedCategory", data.model.category)
+            sessionStorage.setItem("timer", 45)
+
             console.log("YOU SELECTED GAME")
+            self.setState({showJudgeChoices: false})
+
             self.setState({selectedTheme: data.model.theme})
             self.setState({selectedCategory: data.model.category})
             self.setState({playerList: data.model.member})
@@ -147,15 +215,17 @@ class Home extends Component {
                 let newArray = []
                 newArray.push(data.model.member)
                 self.setState({playerList: newArray}, function() {
-                    self.setState({showTimer: true})
+                    sessionStorage.setItem("playerArray", JSON.stringify(newArray))
+                    self.setState({showTimer: true}) 
                     self.setState({showJudgeCategory: false})
                     self.setState({showPending: true})
                 }) 
             }) 
         })
-        //If the player runs out of time, show previous gif.
-        self.state.socket.on('playeroutoftimereturned', function(data) {
 
+        self.state.socket.on('playeroutoftimereturned', function(data) {
+            sessionStorage.setItem("socketMessage", "playeroutoftimereturned")
+            
             let gifArray = []
             for (var i = 0; i < self.state.gifsReturned.length; i ++ ) {
                 gifArray.push(self.state.gifsReturned[i])
@@ -164,26 +234,32 @@ class Home extends Component {
                 gif: data.model.gif,
                 member: data.model.member
             }
+
             gifArray.push(newGifObject)
             self.setState({gifsReturned: gifArray})
+
+            sessionStorage.setItem("gifsReturned", JSON.stringify(gifArray))
 
             let playerArray = []
             for (var j = 0; j < self.state.playerList.length; j ++ ) {
                 playerArray.push(self.state.playerList[j])
             }
+
             playerArray.push(data.model.member)
             self.setState({playerList: playerArray}, function() {
+                sessionStorage.setItem("playerArray", JSON.stringify(playerArray))
                 if (self.state.playerList.length === self.state.allPlayers.length) {
                     self.setState({outOfTime: true})
                     self.setState({showTimer: false})
                     self.setState({showJudgeChoices: true})
                 }
+
             })
-
-
         })
-        //set the gif for when a player has chosen one
+
         self.state.socket.on('playerchosenreturned', function(data) {
+            sessionStorage.setItem("socketMessage", "playerchosenreturned")
+
             let gifArray = []
             for (var i = 0; i < self.state.gifsReturned.length; i ++ ) {
                 gifArray.push(self.state.gifsReturned[i])
@@ -197,12 +273,15 @@ class Home extends Component {
                 console.log(self.state.gifsReturned)
             })
 
+            sessionStorage.setItem("gifsReturned", JSON.stringify(gifArray))
+
             let playerArray = []
             for (var j = 0; j < self.state.playerList.length; j ++ ) {
                 playerArray.push(self.state.playerList[j])
             }
             playerArray.push(data.model.member)
             self.setState({playerList: playerArray}, function() {
+                sessionStorage.setItem("playerArray", JSON.stringify(playerArray))
                 if (self.state.playerList.length === self.state.allPlayers.length) {
                     self.setState({outOfTime: true})
                     self.setState({showTimer: false})
@@ -210,9 +289,28 @@ class Home extends Component {
                 }
             })
         })
-        
+
+        self.state.socket.on('revealgifsjudge', function() {
+            sessionStorage.setItem("socketMessage", "revealgifsjudge")
+
+            self.setState({showPending: false})
+            self.setState({showGifReveal: true})
+        })
+
+        self.state.socket.on('revealgifsplayer', function() {
+            sessionStorage.setItem("socketMessage", "revealgifsplayer")
+
+            self.setState({showPending: false})
+            self.setState({showGifReveal: true})
+        })
+
+
         self.state.socket.on('winnerinfojudge', function(data) {
+            sessionStorage.setItem("socketMessage", "winnerinfojudge")
+            
             self.setState({winner: data})
+            
+            sessionStorage.setItem("winner", JSON.stringify(data))
 
             let allPlayerArray = []
             let oldJudge = ""
@@ -234,32 +332,29 @@ class Home extends Component {
             self.state.socket.emit('choosenewjudge', randomJudge)
         })
 
-
-
         self.state.socket.on('winnerinfoplayer', function(data) {
+            sessionStorage.setItem("socketMessage", "winnerinfoplayer")
+            sessionStorage.setItem("winner", JSON.stringify(data))
+
             self.setState({winner: data})
         })
 
-        self.state.socket.on('revealgifsjudge', function() {
-            self.setState({showPending: false})
-            self.setState({showGifReveal: true})
-        })
-
-        self.state.socket.on('revealgifsplayer', function() {
-            self.setState({showPending: false})
-            self.setState({showGifReveal: true})
-        })
-
         self.state.socket.on('newjudgeupdated', function() {
+            sessionStorage.setItem("socketMessage", "newjudgeupdated")
+  
             let oldjudge = self.state.oldJudge
             self.state.socket.emit('changeoldjudge', oldjudge)
         })
 
         self.state.socket.on('oldjudgeupdated', function() {
+            sessionStorage.setItem("socketMessage", "oldjudgeupdated")
+
             self.state.socket.emit('newgame')
         })
 
         self.state.socket.on('newgamejudge', function(data) {
+            sessionStorage.setItem("socketMessage", "newgamejudge")
+
             self.updateMembers(data, function() {
                 self.setState({showGifReveal: false})
                 self.setState({showWinner: true})
@@ -267,15 +362,61 @@ class Home extends Component {
         })
 
         self.state.socket.on('newgameplayer', function(data) {
+            sessionStorage.setItem("socketMessage", "newgameplayer")
+
             self.updateMembers(data, function() {
                 self.setState({showGifReveal: false})
                 self.setState({showWinner: true})
             })
         })
 
+        self.state.socket.on('disconnectuser', function() {
+            self.setState({remainingUsers: []})
+            self.setState({socketCalls: 0}, function() {
+                self.state.socket.emit('disconnectuserinfo', sessionStorage.getItem("username"))
+            })
+        })
+
+        self.state.socket.on('disconnectuserself', function() {
+            self.setState({remainingUsers: []})
+            self.setState({socketCalls: 0}, function() {
+                self.state.socket.emit('disconnectuserinfo', sessionStorage.getItem("username"))
+            })
+        })
+
+        self.state.socket.on('remaininguserinfo', function(data) {
+            let playerArray = self.state.remainingUsers
+            playerArray.push(data)
+            let socketCount = self.state.socketCalls + 1
+            self.setState({remainingUsers: playerArray}, function() {
+                self.setState({socketCalls: socketCount}, function() {
+
+                    if (parseInt(self.state.socketCalls) === (parseInt(self.state.allPlayers.length) - 1)) {
+                        
+                        for (var i = 0; i < self.state.allPlayers.length; i ++ ) {
+                            if (self.state.remainingUsers.indexOf(self.state.allPlayers[i].ip) === -1) {
+                                self.state.socket.emit('updateremainingusers', self.state.allPlayers[i])
+                            }
+                        }
+                        
+                    }
+
+                }) 
+            })
+        })
+
+        self.state.socket.on('updateremainingusersreturn', function() {
+            self.state.socket.emit('updatedatabase')
+        })
+
+        self.state.socket.on('updatedatabasereturned', function(data) {
+           reloadSocket(data, self.componentChange.bind(this), self.state.socket)
+        })
+
     }
 
     // Grab current URL and set state variable, then continue to check URL
+    
     setUrl = () => {
         let currenturl = window.location.href;
         let spliturl = currenturl.split("/");
@@ -293,6 +434,7 @@ class Home extends Component {
     // Check state variable URL against session database. If url exist is database, the user can continue into the game
     // If the URL does not exist in the database, the user is redirected to an error screen
     checkURL = () => {
+
         const self = this
 
         API.checkSessionUrl(self.state.urlString)
@@ -315,28 +457,7 @@ class Home extends Component {
                 this.setState({keyword: res.data[0].title})
 
                 this.setState({socket: socket}, function() {
-
-                    this.configureSocket(this.state.socket)
-
-                    this.state.socket.on('usermade', function(data) {
-                        console.log("usermade socket working")
-                        console.log(data);
-                        self.setState({socketAddress: data.userid}, function() {
-
-                            //No members in session
-                            if (res.data[0].members.length === 0 ) {
-                                console.log("no members yet in session")
-                                self.setState({showProfile: true})
-                            }
-                            // If users exist but user's ip address is not associated with a session member,
-                            // user gets shown profile page. If the ip address already exists, user goes straight to 
-                            // home page
-                            else {
-                                console.log("members exist in session")
-                                self.setState({showProfile: true})
-                            }
-                        })    
-                    })
+                    this.configureSocket(socket)
                 })
             }
         })
@@ -360,79 +481,78 @@ class Home extends Component {
     //Expand navbar
     expandToggle = () => {
         if (this.state.BottomNavExpanded) {
-            console.log("expanded!")
             this.setState({
                 BottomNavClasses: "bottom-nav not-expanded",
                 BottomNavExpanded: false
             })
         } else {
-            console.log("Not expanded :/");
             this.setState({
                 BottomNavClasses: "bottom-nav expanded",
                 BottomNavExpanded: true
             })
         }
     };
-
+    
     endTimer = () => {
-
     }
 
     updateMembers = (data, callback) => {
         console.log("update members triggered")
-        console.log(data.model[0].members)
 
+        let members = []
+
+        if (data.model) {
+            members = data.model[0].members
+        }
+
+        else if (data.data) {
+            members = data.data[0].members
+        }
+
+        console.log(members)
         const bottomNavArray = []
         const playerList = []
         const totalPlayerList = []
         let count = 1
 
-        for (var i = 0; i < data.model[0].members.length; i ++) {
+        for (var i = 0; i < members.length; i ++) {
 
-            totalPlayerList.push(data.model[0].members[i])
+            totalPlayerList.push(members[i])
 
-            if (data.model[0].members[i].ip === this.state.socketAddress) {
-                this.setState({userName: data.model[0].members[i].name})
-                this.setState({userScore: data.model[0].members[i].score})
-                this.setState({userColor: data.model[0].members[i].color})
-                this.setState({userJudge: data.model[0].members[i].judge})
+            if (members[i].ip === this.state.socketAddress) {
+                this.setState({userName: members[i].name})
+                this.setState({userScore: members[i].score})
+                this.setState({userColor: members[i].color})
+                this.setState({userJudge: members[i].judge})
             }
             
             else {
-                bottomNavArray.push(data.model[0].members[i])
+                bottomNavArray.push(members[i])
             }
 
             if (this.state.pendingPlayerHeader === "Players logged in") {
-                playerList.push(data.model[0].members[i])
+                playerList.push(members[i])
             }
 
             else {
-
-                if (data.model[0].members[i].judge === false) {
-                    playerList.push(data.model[0].members[i])
+                if (members[i].judge === false) {
+                    playerList.push(members[i])
                 }
-
             }
 
-            if (data.model[0].members[i].judge) {
-                this.setState({currentJudge: data.model[0].members[i].name})
+            if (members[i].judge) {
+                this.setState({currentJudge: members[i].name})
             }
 
-            if (count === data.model[0].members.length) {
+            if (count === members.length) {
                 this.setState({allPlayers: totalPlayerList})
                 this.setState({playerList: playerList})
                 this.setState({BottomNavPlayerList: bottomNavArray})
             }
 
-
-
-            count ++
-            
+            count ++ 
         }
-        
         callback()
-    
-
     }
 
     render() {
@@ -483,10 +603,44 @@ class Home extends Component {
                     </div>
                 : null}
 
+                {this.state.showJudgeCategory ?
+                    <div>
+                        <div className="prompt-select-pg">
+                            <p className="judge-instructions">Select a Theme</p>
+                            {this.state.themeIndex.map(prompt => (
+                                <PromptSelect
+                                key={prompt.index}
+                                index={prompt.index}
+                                icon={prompt.icon}
+                                theme={prompt.theme}
+                                color={prompt.color}
+                                categories={prompt.categories}
+                                socket={this.state.socket} />
+                            ))}
+                        </div>
+                        <BottomNav expand={() => { this.expandToggle() }} class={this.state.BottomNavClasses}>
+                            <PlayerListHolder>
+                                <CurrentPlayer playerName={this.state.userName} playerScore={this.state.userScore}
+                                userColor={this.state.userColor} />
+                                {this.state.BottomNavPlayerList.map(
+                                    player => (
+                                        <PlayerList
+                                        key={player.ip}
+                                        id={player.ip}
+                                        playerName={player.name} playerScore={player.score}
+                                        userColor={player.color}
+                                        />
+                                    ))
+                                }
+                            </PlayerListHolder>
+                        </BottomNav> 
+                    </div>
+                : null }
+
                 { this.state.showGiphySearch ?
                     <div> 
                         <GiphySearch theme={this.state.selectedTheme} category={this.state.selectedCategory} socket={this.state.socket} 
-                        userSocket={this.state.socketAddress} 
+                        userSocket={sessionStorage.getItem("username")} judge={this.state.currentJudge}
                         timer={this.state.outOfTime} outOfTime={this.componentChange.bind(this)} >
                             <Timer outOfTime={this.componentChange.bind(this)} />
                         </GiphySearch>
@@ -510,43 +664,10 @@ class Home extends Component {
                     </div>
                 : null}
 
-                {this.state.showJudgeCategory ?
-                    <div>
-                        <p className="prompt-title">Select a Theme</p>
-                        {this.state.themeIndex.map(prompt => (
-                            <PromptSelect
-                            key={prompt.index}
-                            index={prompt.index}
-                            icon={prompt.icon}
-                            theme={prompt.theme}
-                            color={prompt.color}
-                            categories={prompt.categories}
-                            socket={this.state.socket} />
-                        ))}
-                        <BottomNav expand={() => { this.expandToggle() }} class={this.state.BottomNavClasses}>
-                            <PlayerListHolder>
-                                <CurrentPlayer playerName={this.state.userName} playerScore={this.state.userScore}
-                                userColor={this.state.userColor} />
-                                {this.state.BottomNavPlayerList.map(
-                                    player => (
-                                        <PlayerList
-                                        key={player.ip}
-                                        id={player.ip}
-                                        playerName={player.name} playerScore={player.score}
-                                        userColor={player.color}
-                                        />
-                                    ))
-                                }
-                            </PlayerListHolder>
-                        </BottomNav> 
-                    </div>
-                
-                : null }
-
                 { this.state.showGifReveal ? 
                     <GifReveal
                         theme={this.state.selectedTheme} category={this.state.selectedCategory} gifsReturned={this.state.gifsReturned} 
-                        users={this.state.allPlayers} userSocket = {this.state.socketAddress}
+                        users={this.state.allPlayers} userSocket = {sessionStorage.getItem("username")}
                         socket={this.state.socket}
                     />
                 : null}
