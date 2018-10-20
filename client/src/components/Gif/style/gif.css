@@ -8,3 +8,6 @@
       object-fit: fill;
       max-height: 240px;
       max-width: 100%; }
+.gif-preview:hover {
+  box-shadow: 0 0 2px 5px grey;}
+    

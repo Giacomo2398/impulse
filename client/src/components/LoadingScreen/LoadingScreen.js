@@ -152,14 +152,6 @@ class LoadingScreen extends Component {
                   ) : null} 
               </div>
 
-              {/* { this.state.userJudge ? 
-                <div id="show-gifs-div">
-                  { this.state.showChoices ? 
-                    <p className="show-gifs-btn" onClick={this.showGifs}>Show Gifs</p>
-                  : null}
-                </div>
-            : null} */}
-
           </div>
 
           { this.state.userJudge ? 
