@@ -9,7 +9,7 @@
     "scripts": {
       "server": "node server.js",
       "client": "node scripts/start-client.js",
-      "start": "concurrently \"yarn server.js\" \"yarn client\"",
+      "start": "concurrently \"yarn server\" \"yarn client\"" ,
       "build": "node scripts/build.js",
       "herokuSeed": "node scripts/herokuSeed.js",
       "seed": "node scripts/localSeed.js",
@@ -18,8 +18,6 @@
     },
     "author": "Impulse Team",
     "license": "ISC",
-    "devDependencies": {
-    },
     "dependencies": {
       "axios": "^0.16.2",
       "body-parser": "^1.18.2",
