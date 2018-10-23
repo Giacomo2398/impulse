@@ -319,7 +319,7 @@ input[type="text"]:focus {
   .playerlist-holder td {
     padding: 5px 15px; }
 
-    /*Giphy Search*/
+    Giphy Search
     .giphy-component {
       padding: 10px; }
       .giphy-component #giphy-search-judge {
@@ -402,3 +402,5 @@ input[type="text"]:focus {
           .giphy-component .search-holder .button-holder .confirm:hover {
             cursor: pointer;
             background: #3da893; }
+            
+*/ 
