@@ -1,0 +1,13 @@
+@font-face {
+    font-family: Squirk;
+    src: url("./fonts/Squirk.otf");
+  }
+  
+.game-title {
+    font-family: Squirk;
+    font-size: 170px;
+    margin-top: 10%;
+    text-shadow: -3px 0 black, 0 1px black, 1px 0 black, 0 -3px black;
+    letter-spacing: 0px;
+    color: rgba(252, 250, 250, 0.89);
+}
