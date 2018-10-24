@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import API from "../../utils/API";
 import Gif from "../Gif/Gif";
 import Modal from "../../components/Modal/Modal";
+import "./style/GiphySearch.css";
 
 class GiphySearch extends Component {
 

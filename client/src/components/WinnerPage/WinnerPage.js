@@ -49,8 +49,6 @@ class WinnerPage extends Component {
 		return (
 			<div className="winnerScreen-component">
 
-        <img className="true-that-text" src="https://i.imgur.com/zhbLaMZ.png" alt="True That!"/>
-
         <div className="theme-and-category" id="winner-pg-prompt"> 
             <p className="theme-prompt" id="winner-pg-theme">{this.props.theme}</p>
             <p className="category-prompt" id="winner-pg-category">{this.props.category}</p>
