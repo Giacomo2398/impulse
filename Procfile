@@ -1,1 +1,2 @@
-web: npm run server
+web: yarn client/server.js
+api: yarn server.js
