@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { SignupBtn, LoginBtn, EnterBtn } from "../../components/Buttons";
 import { Enter } from "../../components/Enter";
 import Logo from "../../components/Logo/Logo";
+import Title from "../../components/Title/Title";
 import API from "../../utils/API";
 import Modal from "../../components/Modal/Modal";
 import mnGen from "mngen";
@@ -126,6 +127,7 @@ class Login extends Component {
         return (
             <div>
                 <Logo></Logo>
+                {/* <Logo></Logo> */}
                 <SignupBtn onClick={this.generateRandomWord} randomword={this.state.randomWord} 
                 showbutton={this.state.showButton.toString()}/>
 

@@ -24,7 +24,7 @@ const Categories = [
 		index: 3,
 		color: "#802152",
 		theme: ["Epic Quests"],
-		categories: ["Trying to make it to Taco Bell at 1:58 a.m. when they close at 2:00 a.m.", "Some WoW reference Tara is gonna make"]
+		categories: ["Trying to make it to Taco Bell at 1:58 a.m. when they close at 2:00 a.m.", "Some WoW reference Tara is gonna make", "Trying to make it through a stoplight before it turns red"]
   },
   {
 		icon: "far fa-frown",
@@ -45,7 +45,7 @@ const Categories = [
 		index: 6,
 		color: "#5FACFF",
 		theme: ["Playin It Cool"],
-		categories: ["When you fart in public", "When you say something you think is funny but no one laughs","When you almost fall on ice", "When you pull on a push door", "When you forget to leave the parking brake on", "When you sneeze and it triggers a fart", "When you're socks don't match", "When you trip in front of a crowd of people", "When you forget someones name and they say hi"]
+		categories: ["When you fart in public", "When you say something you think is funny but no one laughs","When you almost fall on ice", "When you pull on a push door", "When you forget to leave the parking brake on", "When you sneeze and it triggers a fart", "When you're socks don't match", "When you trip in front of a crowd of people", "When you forget someones name and they say hi", "When you're driving and a bee flies into your car"]
 	},
   {
 		icon: "fas fa-eye",
@@ -59,7 +59,7 @@ const Categories = [
 		index: 8,
 		color: "#FF8A5B",
 		theme: ["Supernatural Encounters"],
-		categories: ["When you stand up too quickly and get a headrush", "When you wake up on an alien spaceship", "Your friend is driven mad in his attempts to contact Cthulu"]
+		categories: ["When you stand up too quickly and get a headrush", "When you wake up on an alien spaceship", "Your friend is driven mad in his attempts to contact Cthulu", "When your feet reach over the edge of the bed"]
 	}
 ];
 

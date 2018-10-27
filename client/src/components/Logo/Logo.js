@@ -1,4 +1,5 @@
 import React from "react";
+import "./style/logo.css";
 
 const Logo = props => (
   <div className="game-logo">
