@@ -22,7 +22,8 @@ module.exports = {
   },
   update: function(req, res) {
     db.Gif
-      .findByIdAndUpdate(req.params.id, req.body, {new: true})  //find by id, update with body, return new instead of old
+      // THIS NEEDS TO BE CHANGED
+      .findById(req.params.id)
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(4220).json(err));
   }

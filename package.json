@@ -11,14 +11,15 @@
       "client": "node scripts/start-client.js",
       "start": "concurrently \"nodemon server.js\" \"npm run client\"",
       "build": "node scripts/build.js",
+      "herokuSeed": "node scripts/herokuSeed.js",
+      "seed": "node scripts/localSeed.js",
       "test": "echo \"Error: no test specified\" && exit 1",
       "installDeps": "yarn && cd client && yarn"
     },
     "author": "Impulse Team",
     "license": "ISC",
     "devDependencies": {
-      "concurrently": "^3.5.0",
-      "nodemon": "^1.11.0"
+      "concurrently": "^3.5.0"
     },
     "dependencies": {
       "axios": "^0.16.2",
@@ -30,7 +31,8 @@
       "moment": "^2.22.1",
       "mongoose": "^5.0.17",
       "path": "^0.12.7",
-      "socket.io": "^2.1.0"
+      "socket.io": "^2.1.0",
+      "nodemon": "^1.11.0"
     }
   }
   
