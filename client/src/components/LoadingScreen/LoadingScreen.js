@@ -148,16 +148,8 @@ render() {
         </div>
       : null }
 
-<<<<<<< HEAD
-        <p className="judge"><i className="fas fa-gavel"></i> {this.props.judge}</p>
-      
-        <div>
-          <img src="https://media.giphy.com/media/ErLimaUL0blbW/giphy.gif" alt="" className="loading-gif"/>
-          <p className="waiting-msg">{this.state.pendingMessage}</p>
-=======
       <div>
         <p className="waiting-msg">{this.state.pendingMessage}</p>
->>>>>>> 76f98d7fb1eb9e11e6f7bc3f7fe461003190f370
           <div>
             <h1 id="current-players"> {this.state.pendingPlayerHeader} </h1>
               <div className="current-players-div">
@@ -174,24 +166,8 @@ render() {
                         </div>
                   ) : null} 
               </div>
-
           </div>
-<<<<<<< HEAD
-
-          { this.state.userJudge ? 
-            <div id="show-gifs-div">
-              <span className="btn">
-                { this.state.showChoices ? 
-                  <p className="show-gifs-btn" onClick={this.showGifs}>Show Gifs</p>
-                : null}
-              </span>
-            </div>
-          : null}
-
-          { this.state.showKeyword ? 
-=======
       </div>
->>>>>>> 76f98d7fb1eb9e11e6f7bc3f7fe461003190f370
 
       { this.state.showKeyword ? 
         <div className="pull-themes-btn">

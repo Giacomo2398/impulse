@@ -151,7 +151,7 @@ class Login extends Component {
                 <Modal 
                     className="game-instructions" 
                     id="general-game-instructions" 
-                    text="How to Play"
+                    text="?"
                     modalTitle="How to Play"
                     modalInstructions1= "If you are starting a new game with friends, click 'Create Game' to generate your unique room key." 
                     modalInstructions2="Click 'Join Game' and enter your room key to start playing. "
