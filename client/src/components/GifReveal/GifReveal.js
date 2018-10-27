@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Gif from "../Gif/Gif";
+import "./style/GifReveal.css";
 
 class GifReveal extends Component {
   state = {

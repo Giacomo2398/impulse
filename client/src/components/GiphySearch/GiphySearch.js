@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
 import Gif from "../Gif/Gif";
+import Modal from "../../components/Modal/Modal";
+import "./style/GiphySearch.css";
 
 class GiphySearch extends Component {
 
@@ -69,6 +71,7 @@ class GiphySearch extends Component {
       //confirm button
       confirmSelection = () => {
     
+        if (this.state.image_url !== "http://via.placeholder.com/500x240/31263E/31263E") {
         //That gif
         let gifObject = {
             socket: this.props.userSocket,
@@ -83,37 +86,52 @@ class GiphySearch extends Component {
         this.props.outOfTime("showTimer", false)
         this.props.outOfTime("showGiphySearch", false)
         this.props.outOfTime("showPending", true)
-    
+        }
       }
     
       render() {
-          return (
-              <div className="giphy-component"> 
-                  <h6>{this.props.theme}</h6>
-                  <h4>{this.props.category}</h4>
-                  <div className="search-holder">
-                    <input name="giphySearchBar" onChange={this.searchTerm} type="text" />
-                    <div onClick={this.callGIPHY} className="search-button">
-                        <i className="fas fa-search"></i>
-                    </div>
-                    <Gif src={this.state.image_url}/>
-    
-                    <div className="button-holder">
-                        <div className="timer-placeholder">
-                            <i className="fas fa-stopwatch"></i>
-                            <span className="timer">{this.props.children}</span>
-                        </div>
-                        <div className="button research" onClick={this.callGIPHY}>
-                            <i className="fas fa-redo"></i>
-                        </div>
-                        <div className="button confirm" onClick={this.confirmSelection}>
-                            <i className="fas fa-check"></i>
-                        </div>
-                    </div>
-                  </div>
+        return (
+            <div className="giphy-component">    
+              <Modal
+                  className="game-instructions"
+                  id="giphy-search-instructions"
+                  text="?"
+                  modalTitle="What Now?"
+                  modalInstructions1="Try to find the perfect gif by entering a search term or phrase into the search bar. Click on the magnifying glass to search. You will be returned one gif at a time. If you like the gif, click the check mark button. If you want to shuffle, click the reload button."
+                  modalInstructions2="If you want to search a different term or phrase, just use the search bar again."
+                  modalInstructions3= "Be sure to choose a gif before the time runs out!"
+              >
+              </Modal>
+  
+              <p className="judge" id="giphy-search-judge" style={{backgroundColor:'#C0C0C0'}}><i className="fas fa-gavel"></i> {this.props.judge}</p>
+              
+              <div className="theme-and-category" id="giphy-search-prompt"> 
+                  <p className="theme-prompt" id="giphy-theme-prompt">{this.props.theme}</p>
+                  <p className="category-prompt">{this.props.category}</p>
               </div>
-          );
-      }
+  
+                <div className="search-holder">
+                  <input name="giphySearchBar" onChange={this.searchTerm} type="text" />
+                  <div onClick={this.callGIPHY} className="search-button">
+                      <i className="fas fa-search"></i>
+                  </div>
+                  <Gif src={this.state.image_url}/>
+  
+                  <div className="button-holder">
+                      <div className="timer-placeholder">
+                          <span className="timer">{this.props.children}</span>
+                      </div>
+                      <div className="button research" onClick={this.callGIPHY}>
+                          <i className="fas fa-redo"></i>
+                      </div>
+                      <div className="button confirm" onClick={this.confirmSelection}>
+                          <i className="fas fa-check"></i>
+                      </div>
+                  </div>
+                </div>
+            </div>
+        );
     }
+  }
     
     export default GiphySearch;

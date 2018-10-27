@@ -11,8 +11,6 @@ class WinnerPage extends Component {
   }
 
 	componentDidMount = () => {
-    console.log("mounted");
-    console.log(this.props)
     this.setState({gif: this.props.winner.gif})
     this.setState({winner: this.props.winner.member.name})
     this.setState({winnerColor: this.props.winner.member.color})
@@ -47,31 +45,27 @@ class WinnerPage extends Component {
     self.props.socket.emit('startnextround')
   }
 
-  // Users color is this.state.winner.member.color
-
 	render() {
 		return (
 			<div className="winnerScreen-component">
-        {/* Button to start next round */}
-        <div className="pull-themes-btn">
-          <span className="btn">
-          { this.state.userJudge ? 
-            <p className="next-round-btn" onClick={this.startGame}>Next Round</p>
-          : null}
-          </span>
+
+        <div className="theme-and-category" id="winner-pg-prompt"> 
+            <p className="theme-prompt" id="winner-pg-theme">{this.props.theme}</p>
+            <p className="category-prompt" id="winner-pg-category">{this.props.category}</p>
         </div>
-
-        <p className="judge">Judge: {this.state.judge}</p>
-
-        <h6 className="winner-page-recap">{this.props.theme}</h6>
-        <h4>{this.props.category}</h4>
 
         <div className="winning-gif-holder">
           <img className="winning-gif" src={this.state.gif} alt=""/>
         </div>
 
-        <h1>Winner:</h1>
-        <h3>{this.state.winner}!!!</h3>    
+        <h1 className="winner-name">{this.state.winner} wins!</h1>
+
+        <span className="btn">
+          { this.state.userJudge ? 
+            <p className="next-round-btn" onClick={this.startGame}>Next Round</p>
+          : null}
+        </span>
+
       </div>
 			);
 	}

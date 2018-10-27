@@ -1,78 +1,93 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:700");
 @import url("https://use.fontawesome.com/releases/v5.0.10/css/all.css");
 
-p {
-    margin: 0px; }
 
-.loading-screen-holder {
-    min-height: 25px;
-    width: 100%;
-    padding: 15px;
-    margin-top: 30px; }
+    .loading-screen-holder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px; }
+  .loading-screen-holder .btn {
+    margin: 0; }
 
-#loading-pg-roomkey, .judge {
-    padding: 10px 25px;
-    border-radius: 20px;
-    position: absolute;
-    top: 10px; }
-    
-#loading-pg-roomkey {
-    right: 15px;
-    background-color: #f12711; }
+.judge, #loading-pg-roomkey {
+  padding: 10px 20px;
+  border-radius: 20px;
+  position: absolute;
+  min-width: 133px;
+  left: 10px; }
 
 .judge {
-    left: 15px;
-    background-color: #C0C0C0; }
-    
-.judge-start {
-    font-family: "Montserrat", sans-serif;
-    color: white;
-    width: 200px;
-    height: 70px;
-    padding: 20px 25px;
-    border-radius: 80px;
-    background: #1D2671;
-    font-size: 23px; }
-    
-.judge-start:hover {
-    cursor: pointer;
-    background: #c533fb; }
+  top: 10px; }
 
-.loading-gif {
-    padding: 15px;
-    max-width: 350px;
-    margin: 25px auto; }
+#loading-pg-roomkey {
+  top: 65px;
+  background-color: #FF6161; }
 
-#current-players {
-    font-family: "Montserrat", sans-serif;
-    color: white;
-    font-size: 175%;
-    margin: 5px 0px 20px 0px; }
+.judge-start, .show-gifs-btn, .next-round-btn {
+  font-family: "Montserrat", sans-serif;
+  color: white;
+  font-size: 17px;
+  padding: 10px;
+  border-radius: 40px;
+  width: 145px;
+  margin: 0 auto; }
+
+.judge-start:hover, .show-gifs-btn:hover, .next-round-btn:hover {
+  cursor: pointer;
+  transform: scale(0.99); }
+
+.next-round-btn {
+  background-color: #FF6161; }
+
+.next-round-btn:hover {
+  background-color: #b24343; }
+
+.judge-start, .show-gifs-btn {
+  background-color: rgb(37, 29, 110); }
+
+.judge-start:hover, .show-gifs-btn:hover {
+  background-color: #3d3ac9; }
+
+.show-gifs-btn {
+  margin-top: 10%; }
+
+.pull-themes-btn {
+  width: 100%; }
+
+.waiting-msg {
+  padding: 10px 0;
+  font-size: 85%; }
+
+#current-players, #no-players {
+  font-family: "Montserrat", sans-serif;
+  color: white;
+  font-size: 185%; }
 
 #username {
-    font-family: "Montserrat", sans-serif;
-    color: white;
-    font-size: 35px; }
+  font-family: "Montserrat", sans-serif;
+  color: white;
+  font-size: 35px; }
 
 .current-players-div {
-    width: 100%;
-    padding-top: 15px;
-    text-align: center;
-    margin-top: -25px; }
-    
-.player-bubble {
-    display: inline-block;
-    z-index: 100;
-    margin: 0px -10px 0px -10px; }
-    
-.fa-stack {
-    display: inline-block;
-    height: 1.4em;
-    line-height: 1.5em;
-    position: relative;
-    vertical-align: middle;
-    width: 2em; }
+  width: 100%;
+  text-align: center;
+  padding: 10px; }
 
+.player-bubble {
+  display: inline-block;
+  z-index: 100;
+  margin: 0 -12px; }
+
+.fa-stack {
+  display: inline-block;
+  height: 1.4em;
+  line-height: 1.5em;
+  position: relative;
+  vertical-align: middle;
+  width: 2em; }
+
+<<<<<<< HEAD
 .show-gifs-btn {
     font-family: "Montserrat", sans-serif;
     color: white;
@@ -89,3 +104,42 @@ p {
 .show-gifs-btn {
     top: 10px; }
 
+=======
+#timer-icon {
+  font-size: 40px; }
+
+.loading-screen-timer {
+  padding-left: 10px;
+  font-size: 40px; }
+
+.game-instructions {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border-radius: 50%;
+  background-color: rgb(173, 172, 172);
+  width: 30px;
+  height: 30px;
+  padding: 4px;
+  color: #837c8b;
+}
+
+.game-instructions:hover {
+  cursor: pointer;
+  background-color: #fff;
+  -webkit-transition: .25s;
+  -o-transition: .25s;
+  transition: .25s;
+}
+
+.theme-and-category {
+  background-color: #44BBA4;
+  border-radius: 20px;
+  padding: 10px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 400px; }
+
+.theme-prompt {
+  color: #2a7566; }
+>>>>>>> 76f98d7fb1eb9e11e6f7bc3f7fe461003190f370

@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:700");
+@import url("https://use.fontawesome.com/releases/v5.0.10/css/all.css");
+
+.gif-reveal-component {
+    padding: 10px; }
+    .gif-reveal-component .pick-winner-instruction {
+      font-size: 30px;
+      width: 100%;
+      letter-spacing: 1px;
+      color: white;
+      padding-bottom: 10px; }
+    .gif-reveal-component .gif-reveal-div {
+      margin: 0px auto;
+      padding: 10px;
+      max-width: 400px;
+      width: 100%;
+      border-radius: 10px; }
+      .gif-reveal-component .gif-reveal-div .gif-component .gif-preview {
+        border-radius: 25px;
+        padding: 10px; }
+      .gif-reveal-component .gif-reveal-div .gif-component .gif-preview:hover {
+        cursor: pointer;
+        background: #56a4b8;
+        transition: .25s; }
+  

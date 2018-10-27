@@ -9,7 +9,7 @@ router.get("/", function(req, res){
   console.log("================================")
   axios.get("https://api.giphy.com/v1/gifs/translate?api_key=dc6zaTOxFJmzC&s=" + newSearchTerm)
   .then(function(response){
-    res.send(response.data.data.images.original)
+    res.send(response.data.data.images)
   })
   .catch(function (error) {
     console.log(error);

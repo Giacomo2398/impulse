@@ -13,7 +13,7 @@ class Profile extends Component {
         judge: false,
         showError: false,
         memberArray: [],
-        joinClasses: "join-btn cantJoin"
+        joinClasses: "join-btn cantJoin",
     }
 
     componentDidMount = () => {
@@ -41,13 +41,15 @@ class Profile extends Component {
             self.onClickIdHandler()
             API.checkSessionUrl(this.state.url)
             .then(res => {
-                if (res.data[0].members.length === 0) {
+
+                if (res.data[0].title === sessionStorage.getItem('roomkey')) {
                     this.setState({judge: true});
                 }
 
                 else {
                     this.setState({judge: false})
                 }
+
                 this.setState({joinClasses: "join-btn join"})
             })
         })
@@ -63,11 +65,19 @@ class Profile extends Component {
             this.setState({showError: true})
         }
         else {
+
+            let randomNumber = (Math.floor(Math.random() * 10000) + 10000).toString().substring(1)   
+            let newUsername = this.state.username + randomNumber         
+            sessionStorage.setItem("username", newUsername)
+            console.log("SESSION STORAGE")
+            console.log(sessionStorage.getItem("username"))
+            this.props.profileAdded('socketAddress', newUsername)
+
             API.addSessionMember({
                 url: this.state.url,
                 username: this.state.username,
                 color: this.state.color,
-                ip: this.state.ip,
+                ip: newUsername,
                 judge: this.state.judge
             })
             .then(res => {
@@ -82,22 +92,6 @@ class Profile extends Component {
         const self = this
         self.props.socket.emit('useradded')
 
-        self.props.socket.on('useraddedsuccessfullyself', function(data) {
-            console.log("YOU ARE ADDED")
-            self.props.profileAdded('pendingPlayerHeader', 'Players logged in')
-            self.props.userAdded(data, function() {console.log('useradded')})
-
-            if (self.state.judge) {
-                self.props.profileAdded('pendingMessage', 'Click start game when ready to play')
-                self.props.profileAdded('showProfile', false);
-                self.props.profileAdded('showPending', true);
-            }
-            else {
-                self.props.profileAdded('pendingMessage', 'Waiting for game to start')
-                self.props.profileAdded('showProfile', false);
-                self.props.profileAdded('showPending', true);
-            }  
-        })
     }
 
     onClickIdHandler = () => {
@@ -115,22 +109,20 @@ class Profile extends Component {
 
     render() {
         return (
-            <div>
+            <div className="profile-pg-component">
                 <div>
                     <div className="setup-profile">Setup Your Profile</div>
                     <input id="enter-name" type="text" placeholder="Enter Name" name="username" value={this.state.username} onChange={this.handleInputChange}/>
                 </div>
-
-                <div>
-                    <div className="pick-a-color">Pick a Color</div>
-                </div>
                 
                 <div className="setup-color-buttondiv">
+                    <div className="pick-a-color">Pick a Color</div>
                     <span data="#FFC655" className="yellow-prof btn color-btn" onClick={this.setupProfile}></span>
                     <span data="#5FACFF" className="blue-prof btn color-btn" onClick={this.setupProfile}></span>
                     <span data="#FF6161" className="red-prof btn color-btn" onClick={this.setupProfile}></span>
-                    <span data="#D45FFF" className="pink-prof btn color-btn" onClick={this.setupProfile}></span>
+                    <span data="#C0C0C0" className="grey-prof btn color-btn" onClick={this.setupProfile}></span>
                     <span data="#44BBA4" className="green-prof btn color-btn" onClick={this.setupProfile}></span>
+                    <span data="#D45FFF" className="pink-prof btn color-btn" onClick={this.setupProfile}></span>
                     <span data="#FF8A5B" className="orange-prof btn color-btn" onClick={this.setupProfile}></span>
                     <span data="#9964FF" className="purple-prof btn color-btn" onClick={this.setupProfile}></span>
                     <span data="#444444" className="charcoal-prof btn color-btn" onClick={this.setupProfile}></span>
