@@ -126,7 +126,7 @@ class Login extends Component {
     render() {
         return (
             <div>
-                <Title></Title>
+                <Logo></Logo>
                 {/* <Logo></Logo> */}
                 <SignupBtn onClick={this.generateRandomWord} randomword={this.state.randomWord} 
                 showbutton={this.state.showButton.toString()}/>
