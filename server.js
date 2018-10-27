@@ -16,9 +16,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //Static Assets
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
-}
+
+ app.use(express.static("client/build"));
+
 
 //Routing, both API and view
 app.use(routes);
