@@ -8,7 +8,8 @@
     min-height: 0; }
 
 .modal-background {
-    background: linear-gradient(to right, #360033, #0b8793); }
+    /* background: linear-gradient(to right, #360033, #0b8793);  */
+  background: transparent; }
 
 .modal-style {
   background-color: #2e2a33;

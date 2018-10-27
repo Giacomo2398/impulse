@@ -129,14 +129,6 @@ class LoadingScreen extends Component {
           </div>
         : null }
 
-        { this.state.userJudge ? 
-          <div>
-            { this.state.showChoices ? 
-              <p className="show-gifs-btn" onClick={this.showGifs}>Show Gifs</p>
-            : null}
-          </div>
-        : null}
-
         <p className="judge"><i className="fas fa-gavel"></i> {this.props.judge}</p>
       
         <div>
@@ -158,7 +150,19 @@ class LoadingScreen extends Component {
                         </div>
                   ) : null} 
               </div>
+
           </div>
+
+          { this.state.userJudge ? 
+            <div id="show-gifs-div">
+              <span className="btn">
+                { this.state.showChoices ? 
+                  <p className="show-gifs-btn" onClick={this.showGifs}>Show Gifs</p>
+                : null}
+              </span>
+            </div>
+          : null}
+
           { this.state.showKeyword ? 
 
             <div>

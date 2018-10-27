@@ -1,4 +1,5 @@
 import React from "react";
+import "./style/logo.css";
 
 const MiniLogo = props => (
   <div className="mini-logo-holder">
